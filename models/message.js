@@ -1,7 +1,7 @@
 /** Message class for message.ly */
 
-const db = require("../db");
-const ExpressError = require("../expressError");
+const db = require("../db")
+const ExpressError = require("../expressError")
 
 
 /** Message on the site. */
@@ -21,9 +21,9 @@ class Message {
               sent_at)
             VALUES ($1, $2, $3, current_timestamp)
             RETURNING id, from_username, to_username, body, sent_at`,
-        [from_username, to_username, body]);
+        [from_username, to_username, body])
 
-    return result.rows[0];
+    return result.rows[0]
   }
 
   /** Update read_at for message */
@@ -31,16 +31,16 @@ class Message {
   static async markRead(id) {
     const result = await db.query(
         `UPDATE messages
-           SET read_at = current_timestamp
-           WHERE id = $1
-           RETURNING id, read_at`,
-        [id]);
+         SET read_at = current_timestamp
+         WHERE id = $1
+         RETURNING id, read_at`,
+        [id])
 
     if (!result.rows[0]) {
-      throw new ExpressError(`No such message: ${id}`, 404);
+      throw new ExpressError(`No such message: ${id}`, 404)
     }
 
-    return result.rows[0];
+    return result.rows[0]
   }
 
   /** Get: get message by id
@@ -99,4 +99,4 @@ class Message {
 }
 
 
-module.exports = Message;
+module.exports = Message
